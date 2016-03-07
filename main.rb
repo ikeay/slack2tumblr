@@ -18,7 +18,6 @@ end
 
 # ----- SLACK: 認証 -----
 Slack.configure {|config| config.token = SLACK_TOKEN }
-slack_client = Slack.realtime
 
 
 # ----- REDIS: 初期化 -----
