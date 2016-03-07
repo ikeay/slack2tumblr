@@ -12,5 +12,7 @@ gem "redis"
 gem "tumblr_client"
 
 # 開発環境用ライブラリ
-gem "pry"
-gem "sinatra-contrib"
+group :development do
+  gem "pry"
+  gem "sinatra-contrib"
+end

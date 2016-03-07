@@ -7,13 +7,6 @@ require "tumblr_client"
 require "json"
 require "./settings.rb"
 
-# 開発環境用ライブラリ
-if settings.development?
-  require "pry"
-  require 'sinatra/reloader'
-end
-
-
 # ----- TUMBLR: 認証 -----
 Tumblr.configure do |config|
   config.consumer_key = TUMBLR_CONSUMER_KEY
