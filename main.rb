@@ -69,26 +69,26 @@ def format_data(data)
       _b.gsub!("<@" + SLACK_BOT_ACCOUNT + ">", "")
       body = _b.gsub(":", "")
       title = data[:title]
-      tags = data[:tags].split(",") 
+      tags = data[:tags].split(",")
       post_text_tumblr(title, body, tags)
     when "photo"
       # バイナリでデータを渡せばできるらしい？（未実装）
       if JSON.parse(data[:data])["file"]
-        binary = JSON.parse(data[:data])["file"]["url_private"] 
-        tags = data[:tags].split(",") 
+        binary = JSON.parse(data[:data])["file"]["url_private"]
+        tags = data[:tags].split(",")
         caption = data[:caption]
         post_binary_photo_tumblr(binary, caption, tags)
       else
         _u = JSON.parse(data[:data])["text"]
         url = _u.match(%r{https?://[\w/:%#\$&\?\(\)~\.=\+\-]+}).to_s
-        tags = data[:tags].split(",") 
+        tags = data[:tags].split(",")
         caption = data[:caption]
         post_photo_tumblr(url, caption, tags)
       end
     when "video"
       _u = JSON.parse(data[:data])["text"]
       url = _u.match(%r{https?://[\w/:%#\$&\?\(\)~\.=\+\-]+}).to_s
-      tags = data[:tags].split(",") 
+      tags = data[:tags].split(",")
       caption = data[:caption]
       post_video_tumblr(url, caption, tags)
     when "link"
@@ -96,7 +96,7 @@ def format_data(data)
       _u = JSON.parse(data[:data])["text"]
       url = _u.match(%r{https?://[\w/:%#\$&\?\(\)~\.=\+\-]+}).to_s
       description = data[:description]
-      tags = data[:tags].split(",") 
+      tags = data[:tags].split(",")
       post_link_tumblr(title, url, description, tags)
     when "quote"
       _q = JSON.parse(data[:data])["text"]
@@ -104,7 +104,7 @@ def format_data(data)
       _q.gsub!("<@" + SLACK_BOT_ACCOUNT + ">", "")
       quote = _q.gsub(":", "")
       source = data[:source]
-      tags = data[:tags].split(",") 
+      tags = data[:tags].split(",")
       post_quote_tumblr(quote, source, tags)
     else
       try_again()
@@ -170,8 +170,8 @@ def tag_division (_t)
   text = _t.gsub(":", "")
   # タグに分割
   if text.include?(",")
-    text.gsub!(" ", "") 
-    text.gsub!("#", "") 
+    text.gsub!(" ", "")
+    text.gsub!("#", "")
     tags = text
   elsif text.include?(" ")
     tags = text.gsub(" ", ",")
@@ -184,7 +184,7 @@ end
 def tag_check (_t)
   _t.gsub!("<@" + SLACK_BOT_ACCOUNT + ">", "")
   _t.gsub!(":", "")
-  type = _t.gsub(" ", "") 
+  type = _t.gsub(" ", "")
   case type
     when "text", "txt", "t"
       "text"
@@ -212,12 +212,12 @@ def add_option (_d)
       if !@@post_data[:title]
         @@post_data[:title] = data
         @@post_data[:done] = true
-      end     
+      end
     when "photo", "video"
       if !@@post_data[:caption]
         @@post_data[:caption] = data
         @@post_data[:done] = true
-      end 
+      end
     when "link"
       if !@@post_data[:title]
         @@post_data[:title] = data
@@ -232,7 +232,7 @@ def add_option (_d)
         source = _s.match(%r{https?://[\w/:%#\$&\?\(\)~\.=\+\-]+})
         @@post_data[:source] = source
         @@post_data[:done] = true
-      end 
+      end
     else
       try_again()
   end
